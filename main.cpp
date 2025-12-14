@@ -8,6 +8,7 @@
 #include <CoreServices/CoreServices.h>
 #include <dispatch/dispatch.h>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <sys/stat.h>
@@ -272,6 +273,21 @@ private:
 
   void applyExclusion(const fs::path &path) {
     std::string pathStr = path.string();
+
+    // 1. Create .metadata_never_index to prevent Spotlight indexing
+    fs::path spotlightParamPath = path / ".metadata_never_index";
+    if (!fs::exists(spotlightParamPath)) {
+      std::ofstream outfile(spotlightParamPath);
+      if (outfile.good()) {
+        outfile.close();
+        std::cout << "DEBUG: Created .metadata_never_index in " << pathStr
+                  << std::endl;
+      } else {
+        std::cerr << "WARN: Failed to create .metadata_never_index in "
+                  << pathStr << std::endl;
+      }
+    }
+
     if (isExcludedFast(pathStr.c_str()))
       return;
 

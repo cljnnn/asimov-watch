@@ -1,6 +1,6 @@
 # Asimov Watch
 
-A lightweight, real-time daemon for macOS that automatically prevents development dependencies (like `node_modules`, `vendor`) from being backed up by Time Machine.
+A lightweight, real-time daemon for macOS that automatically prevents development dependencies (like `node_modules`, `vendor`) from being backed up by Time Machine and indexed by Spotlight.
 
 ## Inspiration
 
